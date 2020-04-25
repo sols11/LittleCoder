@@ -10,7 +10,9 @@
 			"iostream": "cpp",
 			"unordered_map": "cpp",
 			"algorithm": "cpp",
-			"new": "cpp"
+			"new": "cpp",
+			"ostream": "cpp",
+			"ratio": "cpp"
 		}
 	}
 }
