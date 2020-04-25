@@ -6,7 +6,11 @@
 	],
 	"settings": {
 		"files.associations": {
-			"vector": "cpp"
+			"vector": "cpp",
+			"iostream": "cpp",
+			"unordered_map": "cpp",
+			"algorithm": "cpp",
+			"new": "cpp"
 		}
 	}
 }
