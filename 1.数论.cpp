@@ -121,7 +121,7 @@ public:
         }
         return res + len;
     }
-    // 附一个C语言的双指针法，不需要reverse
+    // 附一个C语言的双指针+位运算法，不需要reverse，其实更好
 
     // https://leetcode-cn.com/problems/sqrtx/
     int 实现sqrt(int x) {
@@ -146,7 +146,32 @@ public:
         }
         return l;
     }
-    /* 对于一个非负数n，它的平方根不会大于（n/2+1）。牛顿迭代法也可解 */
+    /* 对于一个非负数n，它的平方根不会大于（n/2+1），最容易想到的非暴力算法就是二分 */
+
+    /* 袖珍计算器法：用到一个指数对数计算公式 根号x=e^(0.5*logx)
+    from math import e, log
+    def mySqrt(self, x):  # python
+        if x < 2:
+            return x
+        # 用了log计算，所以复杂度也是O(logn)? 
+        left = int(e**(0.5 * log(x))) # e和log相对，0.5指数即根号
+        right = left + 1
+        return left if right * right > x else right
+    */
+
+    /* 牛顿迭代法：公式 Xk+1 = 0.5*(Xk+X/Xk)，性能比二分更好
+    def mySqrt(self, x):
+        if x < 2:
+            return x
+        
+        x0 = x
+        x1 = (x0 + x / x0) / 2
+        while abs(x0 - x1) >= 1:  # 渐进到误差小于1时结束迭代
+            x0 = x1
+            x1 = (x0 + x / x0) / 2        
+   
+        return int(x1)
+    */
 };
 
 // Test Case
