@@ -12,7 +12,8 @@
 			"algorithm": "cpp",
 			"new": "cpp",
 			"ostream": "cpp",
-			"ratio": "cpp"
+			"ratio": "cpp",
+			"string": "cpp"
 		}
 	}
 }

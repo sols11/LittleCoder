@@ -8,7 +8,7 @@ using namespace std;
 class Solution{
 public:
     // https://leetcode-cn.com/problems/reverse-integer/
-    int reverse(int x)    {
+    int 整数倒置(int x)    {
         long long ret = 0;
         while (x != 0)
         {
@@ -24,7 +24,7 @@ public:
     /* 注意点两个：1.要用long long存，2.要检查32位范围 */
 
     // https://leetcode-cn.com/problems/palindrome-number/
-    bool isPalindrome(int x)    {
+    bool 回文数(int x)    {
         long long res = 0;
         int num = x;
         while (x > 0)
@@ -39,7 +39,7 @@ public:
     还有一种做法是首尾对比，负数直接排除 */
 
     // https://leetcode-cn.com/problems/roman-to-integer/
-    int romanToInt(string s) {
+    int 罗马数字转整数(string s) {
         int sum = 0;
         int pre = convert(s[0]);
         for (int i=1; i<s.length(); ++i)
@@ -70,7 +70,7 @@ public:
         }
     }
     /* hardway是基于convert做手脚，查找两个字符，计算两个字符代表的值，这也是符合规则的 */
-    int romanToInt2(string s) {
+    int romanToInt(string s) {
         unordered_map<string, int> m = {{"I", 1}, {"IV", 3}, {"IX", 8}, {"V", 5}, {"X", 10}, {"XL", 30}, {"XC", 80}, {"L", 50}, {"C", 100}, {"CD", 300}, {"CM", 800}, {"D", 500}, {"M", 1000}};
         int r = m[s.substr(0, 1)];
         for(int i=1; i<s.size(); ++i){
@@ -80,6 +80,73 @@ public:
         }
         return r;
     }
+
+    // https://leetcode-cn.com/problems/add-binary/
+    string 二进制求和(string a, string b) {
+        string ret;
+        reverse(a.begin(), a.end());
+        reverse(b.begin(), b.end());
+        const size_t n = a.size() > b.size() ? a.size() : b.size();
+        int carry = 0;
+        for (size_t i = 0; i < n; ++i)
+        {
+            int ai = i < a.size() ? a[i] - '0' : 0; // 每次判断处理溢出
+            int bi = i < b.size() ? b[i] - '0' : 0; // 更经典的办法是把短的算完再算长的
+            int val = (ai + bi + carry) % 2;
+            carry = (ai + bi + carry) / 2;
+            ret.push_back(val+'0');
+        }
+        if (carry == 1) // 检查最高位
+            ret.push_back('1');
+        reverse(ret.begin(), ret.end());
+        return ret;
+    }
+    /* ez，即使不用转整数/双指针法，3次reverse+while逐位计算也可
+    不愿用reverse的话可以insert往前面插入 ret.insert(ret.begin(), '1') */
+    char* addBinary(char* a, char* b) {
+        int i = strlen(a);
+        int j = strlen(b);
+        
+        int len = i > j? i: j;
+        char* res = (char*)malloc(sizeof(char) * (len + 2));
+        res[++len] = 0;
+        
+        char carry = '0';
+        char pa, pb;
+        while(len > 1 || carry == '1') {
+            pa = i > 0? a[--i]: '0';
+            pb = j > 0? b[--j]: '0';
+            res[--len] = pa ^ pb ^ carry; // 当前位
+            carry = (pa & carry) | (pb & carry) | (pa & pb); //进位
+        }
+        return res + len;
+    }
+    // 附一个C语言的双指针法，不需要reverse
+
+    // https://leetcode-cn.com/problems/sqrtx/
+    int 实现sqrt(int x) {
+        if (x == 1)
+            return 1;
+        // 二分搜索
+        long long l = 0;
+        long long r = x;
+        long long m;
+        long long sum;
+        // 精确到int
+        while (l+1 < r)
+        {
+            m = l + (r-l) / 2;
+            sum = m * m;
+            if (sum < x)
+                l = m;
+            else if (sum > x)
+                r = m;
+            else
+                return m;
+        }
+        return l;
+    }
+    /* 对于一个非负数n，它的平方根不会大于（n/2+1）。牛顿迭代法也可解 */
 };
 
 // Test Case
