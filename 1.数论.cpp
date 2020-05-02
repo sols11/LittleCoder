@@ -2,6 +2,7 @@
 #include <math.h>
 #include <algorithm>
 #include <unordered_map>
+#include <set>
 
 using namespace std;
 
@@ -196,6 +197,48 @@ public:
         return ret;
     }
     /* 水题，26进制转10进制，比上一题还水 */
+
+    // https://leetcode-cn.com/problems/factorial-trailing-zeroes/
+    int 阶乘后的零(int n) {
+        long long ret=0;
+        while (n)
+        {
+            n /= 5;
+            ret += n;
+        }
+        return ret;
+    }
+    /* 阶乘尾数零是一道经典题，因为尾数0必然由因子5产生（因子2远比5多），因此要算出所有因子5的数量
+    25/125 这些都是会产生多个因子5的，所以循环算出。复杂度O(log5 n) */
+
+    // https://leetcode-cn.com/problems/happy-number/
+    int 平方和(int n)
+    {
+        int sum=0;
+        while (n>0)
+        {
+            sum += pow(n % 10, 2);
+            n /= 10;
+        }
+        return sum;
+    }
+
+    bool 快乐数(int n)
+    {
+        if (n <= 0)
+    		return false;
+        set<int> hash;
+        while (n != 1)
+        {
+            n = 平方和(n);
+            if(hash.find(n) != hash.end())
+                return false;
+            hash.insert(n);
+        }
+        return true;
+    }
+    /* 快乐数就是 无限循环得不到1的数，暴力+set记录 即可，O(logn)
+    但也可以用快慢指针法，这题本质是检测链表是否有环。官方题解很精彩，解析了原理 */
 };
 
 // Test Case
