@@ -151,8 +151,7 @@ public:
     /* 袖珍计算器法：用到一个指数对数计算公式 根号x=e^(0.5*logx)
     from math import e, log
     def mySqrt(self, x):  # python
-        if x < 2:
-            return x
+        if x < 2:            return x
         # 用了log计算，所以复杂度也是O(logn)? 
         left = int(e**(0.5 * log(x))) # e和log相对，0.5指数即根号
         right = left + 1
@@ -172,6 +171,31 @@ public:
    
         return int(x1)
     */
+
+    // https://leetcode-cn.com/problems/excel-sheet-column-title/
+    string Excel表列名称(int n) {
+        string ret;
+        while (n>0)
+        {
+            int divisor = (n-1) / 26;
+            int remainder = (n-1) % 26;
+            n = divisor;
+            char c = 'A' + remainder;
+            ret.insert(ret.begin(), c);
+        }
+        return ret;
+    }
+    /* 水题，类似进制换算，26进1，但需要注意进位从1开始 没有0，因此需要n-1 */
+    
+    // https://leetcode-cn.com/problems/excel-sheet-column-title/
+    int Excel表列序号(string s) {
+        int ret=0;
+        for(auto c : s){
+            ret = ret * 26 + (c - 'A' + 1);
+        }
+        return ret;
+    }
+    /* 水题，26进制转10进制，比上一题还水 */
 };
 
 // Test Case
