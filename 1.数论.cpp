@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <unordered_map>
 #include <set>
+#include <vector>
 
 using namespace std;
 
@@ -239,6 +240,47 @@ public:
     }
     /* 快乐数就是 无限循环得不到1的数，暴力+set记录 即可，O(logn)
     但也可以用快慢指针法，这题本质是检测链表是否有环。官方题解很精彩，解析了原理 */
+
+    // https://leetcode-cn.com/problems/count-primes/
+    bool isPrime(int n)
+    {
+        for (int i=2; i*i<=n; ++i)
+            if (n % i==0)
+                return false;
+        return true;
+    }
+    // 判断素数只需要判断[2, sqrt(n)]范围内即可，因为后面的因数和前面的因数是同样的，只是顺序反过来
+    int 计数质数(int n)
+    {
+        int count = 0;
+        // 初始默认所有数为质数
+        vector<bool> signs(n, true);
+        for (int i = 2; i < n; i++) 
+        {
+            if (signs[i]) 
+            {
+                count++;
+                for (int j = 2*i; j < n; j += i) // 排除i的倍数
+                    signs[j] = false;
+            }
+        }
+        return count;
+    }
+    /* 这题看题解的，用排除法（埃拉托色尼筛选法），逐步构建素数表并计数即可 */
+
+    // https://leetcode-cn.com/problems/power-of-two/
+    bool 是不是2的幂(int n)
+    {
+        if (n<=0)
+            return false;
+        while (n>1)
+        {
+            if (n % 2 != 0)
+                return false;
+            n /= 2;
+        }
+        return true;
+    }
 };
 
 // Test Case
